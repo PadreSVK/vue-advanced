@@ -1,28 +1,30 @@
+/* eslint-disable no-unused-vars */
 
-export const LogLevel = {
-    Informational: "Informational",
-    Warning: "Warning",
-    Error: "Error",
+export enum LogLevel {
+    Informational = "Informational",
+    Warning = "Warning",
+    Error = "Error",
 }
 
 class Logger {
-    constructor(logLevel) {
+    level = LogLevel.Error
+    constructor(logLevel: LogLevel) {
         this.level = logLevel
     }
 
-    logInfo(message) {
+    logInfo(message: String) {
         if (this.level == LogLevel.Informational) {
             console.log(message)
         }
     }
 
-    logError(message) {
+    logError(message: String) {
         if (this.level == LogLevel.Warning || this.level == LogLevel.Informational || this.level == LogLevel.Error) {
             console.error(message)
         }
     }
 
-    logWarn(message) {
+    logWarn(message: String) {
         if (this.level == LogLevel.Warning || this.level == LogLevel.Informational) {
             console.warn(message)
         }
@@ -36,9 +38,9 @@ function getLogger() {
     }
     else {
         return {
-            logWarn: (_) => { },
-            logError: (_) => { },
-            logInfo: (_) => { },
+            logWarn: (_: String) => { },
+            logError: (_: String) => { },
+            logInfo: (_: String) => { },
         }
     }
 }
