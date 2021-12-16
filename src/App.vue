@@ -11,6 +11,11 @@
 
 <script setup>
 import { AppLayout } from "@/layouts";
+import logger from "@/utils/logger";
+
+function click() {
+    logger.logWarn("asdasd")
+}
 
 </script>
 
