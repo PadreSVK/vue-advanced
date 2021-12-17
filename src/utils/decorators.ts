@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 
-import { CatchAll } from "./catchDecorator";
+import {  Catch } from "./catchDecorator";
+import {  CatchAll } from "./catchDecorator";
 import logger from "./logger";
 
 function myDecorator() {
@@ -25,17 +27,35 @@ function catchError(target: any, propertyName: any, descriptor: any) {
     };
 }
 
-@CatchAll(error => logger.logError(error.message))
+// my own error
+
+class MyError extends Error {
+    constructor(msg: string) {
+        super(msg);
+
+        // Set the prototype explicitly.
+        //https://github.com/Microsoft/TypeScript-wiki/blob/main/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
+        Object.setPrototypeOf(this, MyError.prototype);
+    }
+
+    sayHello() {
+        return "hello " + this.message;
+    }
+}
+
+// @CatchAll(error => logger.logError(error.message))
+@Catch(MyError, error => logger.logError(error.message))
+// or add custom error types and use @Catch
 export class MyAwesomeClient {
 
-    @catchError
+    // @catchError
     safeCall() {
         return "awesome"
     }
-    @myDecorator()
-    @catchError
+    // @myDecorator()
+    // @catchError
     exceptionCall() {
-        throw new Error("Something went wrong")
+        throw new MyError("Something went wrong")
     }
 
 }
