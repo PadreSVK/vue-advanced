@@ -1,4 +1,7 @@
 
+import { CatchAll } from "./catchDecorator";
+import logger from "./logger";
+
 function myDecorator() {
     console.log("first(): factory evaluated");
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -22,6 +25,7 @@ function catchError(target: any, propertyName: any, descriptor: any) {
     };
 }
 
+@CatchAll(error => logger.logError(error.message))
 export class MyAwesomeClient {
 
     @catchError
