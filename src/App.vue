@@ -8,12 +8,14 @@
     </AppLayout>
     <button @click="click">Log Warn</button>
     <button @click="clickException">Exception call</button>
+    <button @click="loadData">Load DATA</button>
 </template>
 
 <script setup>
 import { AppLayout } from "@/layouts";
 import logger from "@/utils/logger";
 import { MyAwesomeClient } from "@/utils/decorators";
+import { WeatherFacade } from "@/services/facades/weatherFacade";
 
 const myClient = new MyAwesomeClient()
 
@@ -24,6 +26,12 @@ function clickException() {
     myClient.exceptionCall()
 }
 
+async function loadData() {
+    const facade = new WeatherFacade()
+
+    const temperatures = await facade.getAll()
+    console.table(temperatures)
+}
 </script>
 
 <style>
