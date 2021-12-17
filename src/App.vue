@@ -7,14 +7,21 @@
         <router-view />
     </AppLayout>
     <button @click="click">Log Warn</button>
+    <button @click="clickException">Exception call</button>
 </template>
 
 <script setup>
 import { AppLayout } from "@/layouts";
 import logger from "@/utils/logger";
+import { MyAwesomeClient } from "@/utils/decorators";
+
+const myClient = new MyAwesomeClient()
 
 function click() {
     logger.logWarn("asdasd")
+}
+function clickException() {
+    myClient.exceptionCall()
 }
 
 </script>
